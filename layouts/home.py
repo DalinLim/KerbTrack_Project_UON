@@ -105,12 +105,11 @@ def save_to_excel(mqtt_data_list, max_retries=3):
                             for _, row in existing_df.iterrows():
                                 row_id = str(row['ID']).strip()
                                 desc = str(row['Image_Description']).strip()
-                                # Keep the description if it's not empty, not nan, and not "Pending..."
+                                # Keep the description if it's not empty, if it is empty show "Pending..."
                                 if desc and desc != 'nan' and desc != 'Pending...':
                                     description_map[row_id] = desc
                                     print(f"Preserving description for ID {row_id}: {desc}")
-                        
-                        # Merge data intelligently
+          
                         # First, add existing descriptions to new data
                         if 'Image_Description' not in new_df.columns:
                             new_df['Image_Description'] = 'Pending...'
@@ -335,14 +334,14 @@ def register_callbacks(app, mqtt_data):
                 print(f"Error creating data hash: {e}")
                 current_hash = str(current_time)  # Fallback
             
-            # Save immediately if new data (size increased)
+            # Save immediately if new data 
             if current_size > last_data_size[0]:
                 should_save = True
                 save_reason = f" New data detected: {current_size} items (was {last_data_size[0]})"
                 last_data_size[0] = current_size
                 last_data_hash[0] = current_hash
             
-            # Save if data content changed (same size but different content)
+            # Save if data content changed 
             elif current_hash != last_data_hash[0]:
                 should_save = True
                 save_reason = " Data content changed"
@@ -381,7 +380,7 @@ def register_callbacks(app, mqtt_data):
         Output('mqtt-table', 'columns'),
         Input('interval', 'n_intervals'),
         Input('search-input', 'value'),
-        Input('description-store', 'data'),  # Listen for description updates
+        Input('description-store', 'data'),  
         State('mqtt-store', 'data')
     )
     def update_table(n, search_value, descriptions, mqtt_store_data):
@@ -455,7 +454,7 @@ def register_callbacks(app, mqtt_data):
                     html.Span(f"Address: {address}")
                 ]
                 
-                # popup image when click on the pin
+                # Popup image when click on the pin
                 if image_url:
                     popup_children.extend([
                         html.Br(),
