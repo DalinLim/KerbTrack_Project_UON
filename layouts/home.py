@@ -66,7 +66,7 @@ def validate_data_integrity(old_df, new_df):
         print(f"Error validating data integrity: {e}")
         return True  # Allow save if validation fails
 
-
+# Save data to excel
 def save_to_excel(mqtt_data_list, max_retries=3):
     """Save MQTT data to Excel file with improved data preservation and retry mechanism"""
     for attempt in range(max_retries):
@@ -202,7 +202,7 @@ def save_to_excel(mqtt_data_list, max_retries=3):
                 traceback.print_exc()
                 return False
 
-
+# Excel
 def load_descriptions_from_excel():
     """Load image descriptions from Excel file"""
     try:
@@ -240,7 +240,7 @@ def load_descriptions_from_excel():
         traceback.print_exc()
     return {}
 
-
+# Save data when we close the app
 def cleanup_on_exit():
     """Save data when app shuts down"""
     try:
@@ -541,6 +541,7 @@ def register_callbacks(app, mqtt_data):
                             ),
                         ]
                     )
+                # For Pin
                 markers.append(
                     dl.Marker(position=[lat, lon], children=[dl.Popup(popup_children)])
                 )
